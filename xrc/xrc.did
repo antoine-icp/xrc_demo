@@ -11,7 +11,7 @@ type GetExchangeRateRequest = record {
     quote_asset: Asset;
     // An optional timestamp to get the rate for a specific time period.
     timestamp: opt nat64;
-};
+}; 
 
 type ExchangeRateMetadata = record {
     decimals: nat32;
