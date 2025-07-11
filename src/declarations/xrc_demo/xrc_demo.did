@@ -1,3 +1,6 @@
+/// This is a simple example showing how to interact with the
+/// exchange rate canister (XRC).
 service : {
-  get_exchange_rate: (text) -> (float64);
+  /// Extract the current exchange rate for the given symbol.
+  get_exchange_rate: (symbol: text) -> (float64);
 }

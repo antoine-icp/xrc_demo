@@ -1,5 +1,6 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
+import type { IDL } from '@dfinity/candid';
 
 export interface Asset { 'class' : AssetClass, 'symbol' : string }
 export type AssetClass = { 'Cryptocurrency' : null } |
@@ -11,7 +12,8 @@ export interface ExchangeRate {
   'quote_asset' : Asset,
   'base_asset' : Asset,
 }
-export type ExchangeRateError = { 'CryptoQuoteAssetNotFound' : null } |
+export type ExchangeRateError = { 'AnonymousPrincipalNotAllowed' : null } |
+  { 'CryptoQuoteAssetNotFound' : null } |
   { 'FailedToAcceptCycles' : null } |
   { 'ForexBaseAssetNotFound' : null } |
   { 'CryptoBaseAssetNotFound' : null } |
@@ -24,9 +26,11 @@ export type ExchangeRateError = { 'CryptoQuoteAssetNotFound' : null } |
   { 'ForexInvalidTimestamp' : null } |
   { 'NotEnoughCycles' : null } |
   { 'ForexQuoteAssetNotFound' : null } |
-  { 'StablecoinRateNotFound' : null };
+  { 'StablecoinRateNotFound' : null } |
+  { 'Pending' : null };
 export interface ExchangeRateMetadata {
   'decimals' : number,
+  'forex_timestamp' : [] | [bigint],
   'quote_asset_num_received_rates' : bigint,
   'base_asset_num_received_rates' : bigint,
   'base_asset_num_queried_sources' : bigint,
@@ -39,10 +43,12 @@ export interface GetExchangeRateRequest {
   'base_asset' : Asset,
 }
 export type GetExchangeRateResult = { 'Ok' : ExchangeRate } |
-  { 'Err' : [] | [ExchangeRateError] };
+  { 'Err' : ExchangeRateError };
 export interface _SERVICE {
   'get_exchange_rate' : ActorMethod<
     [GetExchangeRateRequest],
-    GetExchangeRateResult,
+    GetExchangeRateResult
   >,
 }
+export declare const idlFactory: IDL.InterfaceFactory;
+export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

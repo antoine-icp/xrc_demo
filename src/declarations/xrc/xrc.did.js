@@ -11,6 +11,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const ExchangeRateMetadata = IDL.Record({
     'decimals' : IDL.Nat32,
+    'forex_timestamp' : IDL.Opt(IDL.Nat64),
     'quote_asset_num_received_rates' : IDL.Nat64,
     'base_asset_num_received_rates' : IDL.Nat64,
     'base_asset_num_queried_sources' : IDL.Nat64,
@@ -25,6 +26,7 @@ export const idlFactory = ({ IDL }) => {
     'base_asset' : Asset,
   });
   const ExchangeRateError = IDL.Variant({
+    'AnonymousPrincipalNotAllowed' : IDL.Null,
     'CryptoQuoteAssetNotFound' : IDL.Null,
     'FailedToAcceptCycles' : IDL.Null,
     'ForexBaseAssetNotFound' : IDL.Null,
@@ -39,10 +41,11 @@ export const idlFactory = ({ IDL }) => {
     'NotEnoughCycles' : IDL.Null,
     'ForexQuoteAssetNotFound' : IDL.Null,
     'StablecoinRateNotFound' : IDL.Null,
+    'Pending' : IDL.Null,
   });
   const GetExchangeRateResult = IDL.Variant({
     'Ok' : ExchangeRate,
-    'Err' : IDL.Opt(ExchangeRateError),
+    'Err' : ExchangeRateError,
   });
   return IDL.Service({
     'get_exchange_rate' : IDL.Func(
