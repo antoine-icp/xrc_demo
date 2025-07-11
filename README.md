@@ -1,4 +1,4 @@
-# Exchange Rate Canisterr
+# Exchange Rate Canister
 
 This sample code illustrates how to interact with the
 [exchange rate canister](https://forum.dfinity.org/t/new-exchange-rate-mechanism/14543)
